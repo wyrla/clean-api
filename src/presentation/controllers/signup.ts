@@ -1,4 +1,4 @@
-import type { HttpRequest, HttpResponse } from './protocols/http'
+import type { HttpRequest, HttpResponse } from '../protocols/http'
 
 export class SignUpController {
   handle (httpRequest: HttpRequest): HttpResponse {
