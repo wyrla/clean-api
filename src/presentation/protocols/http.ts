@@ -1,5 +1,5 @@
 export interface HttpRequest {
-  body?: Record<string, unknown>
+  body?: any
 }
 
 export interface HttpResponse {
