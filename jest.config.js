@@ -7,7 +7,7 @@ const config = {
     '<rootDir>/src'
   ],
   transform: {
-    '.+\\.ts$': 'ts-node'
+    '.+\\.ts$': 'ts-jest'
   }
 }
 
