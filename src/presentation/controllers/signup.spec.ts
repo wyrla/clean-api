@@ -128,4 +128,20 @@ describe('SignUpController', () => {
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError())
   })
+
+  it('should return 400 if confirmPassword doesn\'t match with password', () => {
+    const { sut } = makeSutStub()
+    const httpRequest = {
+      body: {
+        name: 'some_name',
+        email: 'some_email@provider',
+        password: 'some_password',
+        confirmPassword: 'invalid_password',
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new InvalidParamError('confirmPassword'))
+  })
+
 })
