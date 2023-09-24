@@ -3,13 +3,12 @@ import { badRequest, ok, serverError } from '../../helpers/http-helper'
 import { InvalidParamError, MissingParamError } from '../../errors'
 
 export class SignUpController implements Controller {
-
-  constructor(
+  constructor (
     private readonly emailValidator: EmailValidator,
     private readonly addAccount: AddAccount
-    ) { }
+  ) { }
 
-  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const requiredFields = ['name', 'email', 'password', 'confirmPassword']
       for (const field of requiredFields) {
@@ -18,7 +17,7 @@ export class SignUpController implements Controller {
         }
       }
       const { confirmPassword, email, name, password } = httpRequest.body
-      if(password !== confirmPassword) {
+      if (password !== confirmPassword) {
         return badRequest(new InvalidParamError('confirmPassword'))
       }
 
@@ -33,8 +32,7 @@ export class SignUpController implements Controller {
       })
 
       return ok(account)
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error)
       return serverError()
     }
