@@ -1,16 +1,17 @@
-import { MongoHelper } from "../helpers/mongo-helper"
+import { mongoHelper } from "../helpers/mongo-helper"
+
 import { AccountMongoRepository } from "./account"
 
 describe('Account Mongo Repository', () => {
-    const mongoHelper = new MongoHelper()
+    const mongoDbHelper = mongoHelper
 
     beforeAll(async () => {
-        await mongoHelper.connect(process.env.MONGO_URL!)
+        await mongoDbHelper.connect(process.env.MONGO_URL!)
     })
 
 
     afterAll(async () => {
-        await mongoHelper.disconnect()
+        await mongoDbHelper.disconnect()
     })
 
     test('should return an account on success', async () => {
