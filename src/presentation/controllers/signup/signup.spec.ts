@@ -2,6 +2,8 @@
 import { EmailValidator } from './signup-protocols'
 import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
 import { SignUpController } from './signup'
+import { AccountModel } from '../../../domain/models/account'
+import { AddAccount, AddAccountModel } from '../../../domain/usecases/add-account'
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
@@ -12,12 +14,34 @@ const makeEmailValidator = (): EmailValidator => {
   return new EmailValidatorStub()
 }
 
-const makeSutStub = () => {
+const makeAddAccount = () =>  {
+  class AddAccountStub implements AddAccount {
+    add(account: AddAccountModel): AccountModel {
+      return {
+        id: 'valid_id',
+        email: 'valid_email@provider',
+        name: 'valid_name',
+        password: 'valid_password'
+      }
+    } 
+  }
+  return new AddAccountStub()
+}
+
+interface SutTypes {
+  sut: SignUpController
+  emailValidatorStub: EmailValidator,
+  addAccountStub: AddAccount
+}
+
+const makeSutStub = (): SutTypes => {
  const emailValidatorStub = makeEmailValidator()
- const sut = new SignUpController(emailValidatorStub)
+ const addAccountStub = makeAddAccount()
+ const sut = new SignUpController(emailValidatorStub, addAccountStub)
   return {
     sut,
-    emailValidatorStub
+    emailValidatorStub,
+    addAccountStub
   }
 } 
 
@@ -142,6 +166,25 @@ describe('SignUpController', () => {
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new InvalidParamError('confirmPassword'))
+  })
+
+  it('should call addAccount use case with correct input', () => {
+    const { sut, addAccountStub } = makeSutStub()
+    const addAccountSpy = jest.spyOn(addAccountStub, 'add')
+    const httpRequest = {
+      body: {
+        name: 'some_name',
+        email: 'some_email@provider',
+        password: 'some_password',
+        confirmPassword: 'some_password',
+      }
+    }
+    sut.handle(httpRequest)
+    expect(addAccountSpy).toBeCalledWith({
+        name: 'some_name',
+        email: 'some_email@provider',
+        password: 'some_password'
+    })
   })
 
 })
