@@ -1,9 +1,7 @@
 
-import { EmailValidator } from './signup-protocols'
+import { AccountModel, AddAccount, AddAccountModel, EmailValidator } from './signup-protocols'
 import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
 import { SignUpController } from './signup'
-import { AccountModel } from '../../../domain/models/account'
-import { AddAccount, AddAccountModel } from '../../../domain/usecases/add-account'
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
@@ -185,6 +183,24 @@ describe('SignUpController', () => {
         email: 'some_email@provider',
         password: 'some_password'
     })
+  })
+
+  it('should return 500 if addAccount use case throws', () => {
+    const { sut, addAccountStub } = makeSutStub()
+    jest.spyOn(addAccountStub, 'add').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const httpRequest = {
+      body: {
+        name: 'some_name',
+        email: 'some_email@provider',
+        password: 'some_password',
+        confirmPassword: 'some_password',
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 
 })
