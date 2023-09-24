@@ -3,13 +3,17 @@ import { EmailValidator } from '../protocols'
 import { InvalidParamError, MissingParamError, ServerError } from '../errors'
 import { SignUpController } from './signup'
 
+const makeEmailValidator = (): EmailValidator => {
+  class EmailValidatorStub implements EmailValidator {
+    isValid (email: string): boolean {
+     return true
+    }
+  }
+  return new EmailValidatorStub()
+}
+
 const makeSutStub = () => {
- class EmailValidatorStub implements EmailValidator {
-   isValid (email: string): boolean {
-    return false
-   }
- }
- const emailValidatorStub = new EmailValidatorStub()
+ const emailValidatorStub = makeEmailValidator()
  const sut = new SignUpController(emailValidatorStub)
   return {
     sut,
