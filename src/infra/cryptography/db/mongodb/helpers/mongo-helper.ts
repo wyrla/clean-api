@@ -15,6 +15,11 @@ export class MongoHelper {
         return this._client.db().collection(name)
     }
 
+    map (document: any): any {
+        const { _id, ...data } = document
+        return { id: String(_id), ...data }
+    }
+
     
     public get client() : MongoClient {
         return this._client
