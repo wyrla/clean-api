@@ -9,7 +9,8 @@
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
-    "test:staged": "npm test -- --findRelatedTests"
+    "test:staged": "npm test -- --findRelatedTests",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
