@@ -24,6 +24,7 @@
     "@types/jest": "^29.5.4",
     "@types/lint-staged": "^13.2.0",
     "@types/mongodb": "^4.0.7",
+    "@types/supertest": "^2.0.13",
     "@types/validator": "^13.11.1",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "eslint": "^8.48.0",
@@ -37,6 +38,7 @@
     "lint-staged": "^14.0.1",
     "standard": "^17.1.0",
     "sucrase": "^3.34.0",
+    "supertest": "^6.3.3",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
   },
