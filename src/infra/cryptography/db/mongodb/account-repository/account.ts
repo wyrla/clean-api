@@ -1,16 +1,15 @@
 import { type AddAccountRepository } from '../../../../../data/protocols/add-account-repository'
 import { type AccountModel } from '../../../../../domain/models/account'
 import { type AddAccountModel } from '../../../../../domain/usecases/add-account'
-import { mongoHelper } from '../helpers/mongo-helper'
+import { MongoConnection } from '../mongodb-connection'
 
-export class AccountMongoRepository implements AddAccountRepository {
-  private readonly accountCollection = mongoHelper.getCollection('accounts')
-
+export class AccountMongoRepository extends MongoConnection implements AddAccountRepository {
   async add (accountData: AddAccountModel): Promise<AccountModel> {
-    const result = await this.accountCollection.insertOne(accountData)
+    const accountCollection = await this.getCollection('accounts')
+    const result = await accountCollection.insertOne(accountData)
 
-    const account = await this.accountCollection.findOne({ _id: result.insertedId })
+    const account = await accountCollection.findOne({ _id: result.insertedId })
 
-    return mongoHelper.map(account)
+    return this.map(account)
   }
 }
