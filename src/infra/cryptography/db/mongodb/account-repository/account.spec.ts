@@ -1,5 +1,5 @@
 import env from '../../../../../main/config/env'
-import { mongoHelper } from '../helpers/mongo-helper'
+import { MongoHelper } from '../helpers/mongo-helper'
 
 import { AccountMongoRepository } from './account'
 
@@ -8,14 +8,14 @@ const makeSut = (): AccountMongoRepository => {
 }
 
 describe('Account Mongo Repository', () => {
-  const mongoDbHelper = mongoHelper
+  const mongoDbHelper = MongoHelper
 
   beforeAll(async () => {
     await mongoDbHelper.connect(env.mongoUrl)
   })
 
   beforeEach(async () => {
-    const accountCollection = mongoHelper.client.db().collection('accounts')
+    const accountCollection = await mongoDbHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
 

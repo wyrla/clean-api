@@ -1,12 +1,12 @@
 import { type Collection } from 'mongodb'
-import { mongoHelper } from './helpers/mongo-helper'
+import { MongoHelper } from './helpers/mongo-helper'
 
 export abstract class MongoConnection {
   async getCollection (name: string): Promise<Collection> {
-    return mongoHelper.getCollection(name)
+    return await MongoHelper.getCollection(name)
   }
 
   map (document: any): any {
-    return mongoHelper.map(document)
+    return MongoHelper.map(document)
   }
 }

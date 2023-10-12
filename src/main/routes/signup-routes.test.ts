@@ -1,16 +1,16 @@
 import request from 'supertest'
 import app from '../config/app'
-import { mongoHelper } from '../../infra/cryptography/db/mongodb/helpers/mongo-helper'
+import { MongoHelper } from '../../infra/cryptography/db/mongodb/helpers/mongo-helper'
 
 describe('Sign Up Routes', () => {
-  const mongoDbHelper = mongoHelper
+  const mongoDbHelper = MongoHelper
 
   beforeAll(async () => {
     await mongoDbHelper.connect(process.env.MONGO_URL)
   })
 
   beforeEach(async () => {
-    const accountCollection = mongoHelper.client.db().collection('accounts')
+    const accountCollection = mongoDbHelper.client.db().collection('accounts')
     await accountCollection.deleteMany({})
   })
 
