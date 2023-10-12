@@ -3,14 +3,14 @@ import app from '../config/app'
 import { MongoHelper } from '../../infra/cryptography/db/mongodb/helpers/mongo-helper'
 
 describe('Sign Up Routes', () => {
-  const mongoDbHelper = MongoHelper
+  const mongoDbHelper = MongoHelper.getInstance()
 
   beforeAll(async () => {
     await mongoDbHelper.connect(process.env.MONGO_URL)
   })
 
   beforeEach(async () => {
-    const accountCollection = mongoDbHelper.client.db().collection('accounts')
+    const accountCollection = await mongoDbHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
 

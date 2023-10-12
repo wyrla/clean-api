@@ -8,7 +8,7 @@ const makeSut = (): AccountMongoRepository => {
 }
 
 describe('Account Mongo Repository', () => {
-  const mongoDbHelper = MongoHelper
+  const mongoDbHelper = MongoHelper.getInstance()
 
   beforeAll(async () => {
     await mongoDbHelper.connect(env.mongoUrl)
