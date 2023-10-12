@@ -19,4 +19,16 @@ describe('Mongo Helper', () => {
     accountCollection = sut.getCollection('accounts')
     expect(accountCollection).toBeTruthy()
   })
+
+  test('Should return a document mapped to the controller', () => {
+    const mapped = sut.map({
+      _id: 'any_id',
+      name: 'any_name'
+    })
+
+    expect(mapped).toEqual({
+      id: 'any_id',
+      name: 'any_name'
+    })
+  })
 })
