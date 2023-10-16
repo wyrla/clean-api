@@ -3,7 +3,7 @@ import { serverError } from '../../presentation/helpers/http-helper'
 import type { Controller, HttpRequest, HttpResponse } from '../../presentation/protocols'
 import { LogControllerDecorator } from './log-controller-decorator'
 
-const makeControllerStub = (): Controller => {
+const makeController = (): Controller => {
   class ControllerStub implements Controller {
     async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
       const httpResponse: HttpResponse = {
@@ -32,7 +32,7 @@ interface SutTypes {
 }
 
 const makeSut = (): SutTypes => {
-  const controllerStub = makeControllerStub()
+  const controllerStub = makeController()
   const logErrorRepositoryStub = makeLogErrorRepository()
   const sut = new LogControllerDecorator(controllerStub, logErrorRepositoryStub)
   return {
