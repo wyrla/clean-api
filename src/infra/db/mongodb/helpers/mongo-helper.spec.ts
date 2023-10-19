@@ -1,4 +1,4 @@
-import env from '../../../../../main/config/env'
+import env from '../../../../main/config/env'
 import { MongoHelper } from './mongo-helper'
 
 describe('Mongo Helper', () => {

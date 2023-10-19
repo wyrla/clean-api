@@ -1,6 +1,6 @@
 import request from 'supertest'
 import app from '../config/app'
-import { MongoHelper } from '../../infra/cryptography/db/mongodb/helpers/mongo-helper'
+import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
 
 describe('Sign Up Routes', () => {
   const mongoDbHelper = MongoHelper.getInstance()
