@@ -4,12 +4,12 @@ import { type EmailValidator } from '../signup/signup-protocols'
 import { LoginController } from './login'
 
 const makeEmailValidator = (): EmailValidator => {
-  class EmailValidator implements EmailValidator {
+  class EmailValidatorStub implements EmailValidatorStub {
     isValid (email: string): boolean {
       return true
     }
   }
-  return new EmailValidator()
+  return new EmailValidatorStub()
 }
 
 interface SutTypes {
