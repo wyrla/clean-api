@@ -4,7 +4,7 @@ import { type EmailValidator } from '../signup/signup-protocols'
 import { LoginController } from './login'
 
 const makeEmailValidator = (): EmailValidator => {
-  class EmailValidatorStub implements EmailValidatorStub {
+  class EmailValidatorStub implements EmailValidator {
     isValid (email: string): boolean {
       return true
     }
