@@ -1,5 +1,5 @@
 import { InvalidParamError, MissingParamError } from '../../errors'
-import { badRequest, serverError, unauthorized } from '../../helpers/http-helper'
+import { badRequest, ok, serverError, unauthorized } from '../../helpers/http-helper'
 import { LoginController } from './login'
 import { type Authentication, type EmailValidator, type HttpRequest } from './login-protocols'
 
@@ -115,5 +115,12 @@ describe('Login Controller', () => {
     const httpRequest = makeFakeRequest()
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  test('Should return 200 if authentication is succeed', async () => {
+    const { sut } = makeSut()
+    const httpRequest = makeFakeRequest()
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
   })
 })
