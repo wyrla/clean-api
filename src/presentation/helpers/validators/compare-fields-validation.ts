@@ -9,7 +9,7 @@ export class CompareFieldValidation implements Validation {
 
   validate (input: unknown): Error {
     if (input[this.fieldName] !== input[this.fieldToCompareName]) {
-      return new InvalidParamError('confirmPassword')
+      return new InvalidParamError(this.fieldToCompareName)
     }
   }
 }
